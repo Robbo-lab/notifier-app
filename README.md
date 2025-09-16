@@ -1,4 +1,4 @@
-## Nitifcation App
+## Notifcation App
 Builds on the design pattern exercise in week 8 as an introduction to Django 
 but with a focus on View logic and the seperation of concerns
 Stage 2 will include model, templates and forms.
