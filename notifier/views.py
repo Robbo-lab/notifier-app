@@ -43,7 +43,7 @@ def notify_view(request):
     })
 
 
-def serialize_document(document: Document) -> dict:
+def serialise_document(document: Document) -> dict:
     return {
         "id": document.id,
         "title": document.title,
@@ -56,7 +56,7 @@ def serialize_document(document: Document) -> dict:
 def documents_collection(request):
     if request.method == "GET":
         documents = Document.objects.order_by("-uploaded_at")
-        data = [serialize_document(doc) for doc in documents]
+        data = [serialise_document(doc) for doc in documents]
         return JsonResponse({"documents": data})
 
     if request.method == "POST":
@@ -72,7 +72,7 @@ def documents_collection(request):
         description = payload.get("description", "")
         document = Document.objects.create(title=title, description=description)
 
-        return JsonResponse(serialize_document(document), status=201)
+        return JsonResponse(serialise_document(document), status=201)
 
     return HttpResponseNotAllowed(["GET", "POST"])
 
@@ -85,7 +85,7 @@ def document_detail(request, pk):
         return JsonResponse({"error": "Document not found."}, status=404)
 
     if request.method == "GET":
-        return JsonResponse(serialize_document(document))
+        return JsonResponse(serialise_document(document))
 
     if request.method in {"PUT", "PATCH"}:
         try:
@@ -103,7 +103,7 @@ def document_detail(request, pk):
             document.description = payload["description"] or ""
 
         document.save()
-        return JsonResponse(serialize_document(document))
+        return JsonResponse(serialise_document(document))
 
     if request.method == "DELETE":
         document.delete()
