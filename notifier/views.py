@@ -5,6 +5,7 @@ import logging
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotAllowed, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required, permission_required
 
 from notifier.models import Document
 from notifier.utils.factories import create_user
@@ -21,7 +22,9 @@ notifier.subscribe(log_upload)
 def upload_document(user, document_name):
     notifier.notify(document_name)
 
-
+@login_required
+# one of 4 crud permissions
+@permission_required("notifier.view_document", raise_exception=True)
 def notify_view(request):
     logging.basicConfig(level=logging.INFO)
 
