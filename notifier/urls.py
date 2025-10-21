@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import (
+from notifier.views.views import (
     notify_view,
     documents_collection,
     document_detail, dashboard,
