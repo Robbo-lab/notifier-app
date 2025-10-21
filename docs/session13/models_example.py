@@ -1,7 +1,7 @@
+# models/notifications.py
 from django.conf import settings
 from django.db import models
 from notifier.models import Document
-from django.utils import timezone
 
 
 class Notification(models.Model):
@@ -32,16 +32,11 @@ class Notification(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["recipient", "subject"],
-                name="unique_notification_subject_per_user",
+                fields=["recipient", "subject", "created_at"],
+                name="unique_notification_per_subject_per_user",
             )
         ]
         ordering = ["-created_at"]
-
-    def mark_as_sent(self, timestamp=None):
-        self.status = "sent"
-        self.sent_at = timestamp or timezone.now()
-        self.save(update_fields=["status", "sent_at"])
 
     def __str__(self) -> str:
         return f"{self.subject} → {self.recipient}"

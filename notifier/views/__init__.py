@@ -1,2 +1,3 @@
-from .notifications import NotificationListView  # re-export
-from .views import *  # keep exposing them too
+# re-export
+from .notifications import NotificationListView
+from .views import *

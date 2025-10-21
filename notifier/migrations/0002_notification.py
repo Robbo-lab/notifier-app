@@ -66,8 +66,8 @@ class Migration(migrations.Migration):
                 "ordering": ["-created_at"],
                 "constraints": [
                     models.UniqueConstraint(
-                        fields=("recipient", "subject", "created_at"),
-                        name="unique_notification_per_subject_per_user",
+                        fields=("recipient", "subject"),
+                        name="unique_notification_subject_per_user",
                     )
                 ],
             },
