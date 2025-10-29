@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+  <h1 class="title">User Notifications</h1>
+  <p class="subtitle">Queued, Sent, and Failed notifications</p>
+
+  <!-- Summary Cards -->
+  <div class="columns mt-4">
+    <div class="column has-text-centered">
+      <div class="box has-background-warning-light">
+        <h3 class="title is-5">Queued</h3>
+        <p class="is-size-3">{{ total_queued }}</p>
+      </div>
+    </div>
+    <div class="column has-text-centered">
+      <div class="box has-background-success-light">
+        <h3 class="title is-5">Sent</h3>
+        <p class="is-size-3">{{ total_sent }}</p>
+      </div>
+    </div>
+    <div class="column has-text-centered">
+      <div class="box has-background-danger-light">
+        <h3 class="title is-5">Failed</h3>
+        <p class="is-size-3">{{ total_failed }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications Table -->
+  <div class="box mt-5">
+    <table class="table is-striped is-fullwidth">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Recipient</th>
+          <th>Status</th>
+          <th>Document</th>
+          <th>Created</th>
+          <th>Sent</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for notification in object_list %}
+        <tr>
+          <td>
+            <strong>{{ notification.subject }}</strong>
+            <br>
+            <small>{{ notification.message|truncatewords:12 }}</small>
+          </td>
+          <td>{{ notification.recipient.username }}</td>
+          <td>
+            {% if notification.status == "sent" %}
+              <span class="tag is-success">Sent</span>
+            {% elif notification.status == "queued" %}
+              <span class="tag is-warning">Queued</span>
+            {% elif notification.status == "failed" %}
+              <span class="tag is-danger">Failed</span>
+            {% else %}
+              <span class="tag is-light">Draft</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if notification.document %}
+              <a href="{{ notification.document.file.url }}">{{ notification.document.title }}</a>
+            {% else %}
+              <em>None</em>
+            {% endif %}
+          </td>
+          <td>{{ notification.created_at|date:"Y-m-d H:i" }}</td>
+          <td>
+            {% if notification.sent_at %}
+              {{ notification.sent_at|date:"Y-m-d H:i" }}
+            {% else %}
+              <em>—</em>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="has-text-centered"><em>No notifications found.</em></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
