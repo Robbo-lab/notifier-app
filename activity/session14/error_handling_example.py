@@ -96,7 +96,7 @@ class ErrorHandlingExamples(TestCase):
 # Integration sketch (pseudo-code for the main app)
 # 1. Add `NotificationDeliveryError`, `NotificationRequest`, and `safe_send_notification`
 #    to a new module `notifier/services/delivery.py`.
-# 2. Register a Django template partial `notifier/partials/notification_error.html`
+# 2. Register a Django template partials `notifier/partials/notification_error.html`
 #    and move `ERROR_TEMPLATE` markup into that file.
 # 3. Update `notify_view` to call `safe_send_notification` before rendering the template
 #    and pass the returned payload into the context.

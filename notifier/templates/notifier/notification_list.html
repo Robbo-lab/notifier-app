@@ -5,6 +5,8 @@
 
 {% block content %}
 <div class="container mt-4">
+  <!-- Test the safe send -->
+  {{ test_notification_result.template|safe }}
 
   <h1 class="title">User Notifications</h1>
   <p class="subtitle">Queued, Sent, and Failed notifications</p>
