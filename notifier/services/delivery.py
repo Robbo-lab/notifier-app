@@ -1,8 +1,6 @@
-import logging
 from dataclasses import dataclass
 from django.template.loader import render_to_string
 
-logger = logging.getLogger("activity.session14.errors")
 
 class NotificationDeliveryError(Exception):
     """Raised when a notification cannot be completed."""
@@ -23,14 +21,6 @@ def safe_send_notification(request: NotificationRequest, send_callable):
     try:
         message_id = send_callable(request)
     except NotificationDeliveryError as exc:
-        logger.error(
-            "notification_delivery_failed",
-            extra={
-                "recipient": request.recipient_email,
-                "subject": request.subject,
-                "details": str(exc),
-            },
-        )
         return {
             "status": "error",
             "template": render_to_string(
@@ -47,4 +37,3 @@ def safe_send_notification(request: NotificationRequest, send_callable):
         "status": "success",
         "message_id": message_id,
     }
-

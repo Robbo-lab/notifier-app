@@ -25,7 +25,6 @@ class SerialiseDocumentTests(TestCase):
 
         payload = notifier_views.serialise_document(document)
 
-        self.assertEqual(payload["id"], document.id)
         self.assertEqual(payload["title"], document.title)
         self.assertEqual(payload["description"], document.description)
         self.assertEqual(payload["uploaded_at"], "2024-01-15T09:30:00Z")

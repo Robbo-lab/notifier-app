@@ -1,8 +1,11 @@
-import logging
 from django.test import TestCase
-from notifier.services.delivery import NotificationRequest, safe_send_notification, NotificationDeliveryError
+from notifier.services.delivery import (
+    NotificationRequest,
+    safe_send_notification,
+    NotificationDeliveryError,
+)
 
-logger = logging.getLogger("activity.session14.errors")
+
 # Tests for the error handling helper that mirrors notifier/services usage
 class ErrorHandlingExamples(TestCase):
     def setUp(self):
@@ -25,10 +28,8 @@ class ErrorHandlingExamples(TestCase):
         def failing_sender(request):
             raise NotificationDeliveryError("Notification service unavailable.")
 
-        with self.assertLogs(logger.name, level="ERROR") as captured:
-            payload = safe_send_notification(self.request, failing_sender)
+        payload = safe_send_notification(self.request, failing_sender)
 
         self.assertEqual(payload["status"], "error")
         self.assertIn("notification-error", payload["template"])
         self.assertIn(self.request.subject, payload["template"])
-        self.assertTrue(any("notification_delivery_failed" in line for line in captured.output))

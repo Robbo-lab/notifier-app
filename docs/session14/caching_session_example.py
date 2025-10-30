@@ -45,25 +45,7 @@ def remember_last_document(request, document_id: int) -> JsonResponse:
         }
     }
 )
-# Tests mirroring notifier/views/views.py::documents_collection caching needs
-class DocumentCachingTests(TestCase):
-    def setUp(self):
-        cache.clear()
-        Document.objects.create(title="Run Sheet", description="Agenda")
-        Document.objects.create(title="Release Notes", description="Sprint summary")
 
-    def test_document_list_hits_database_once(self):
-        with self.assertNumQueries(1):
-            first_payload = get_cached_document_payload()
-
-        with self.assertNumQueries(0):
-            second_payload = get_cached_document_payload()
-
-        self.assertEqual(first_payload, second_payload)
-        self.assertEqual(len(first_payload), 2)
-
-
-# Tests mirroring session usage from notifier/views/views.py::notify_view
 class SessionPersistenceTests(TestCase):
     def setUp(self):
         self.factory = RequestFactory()

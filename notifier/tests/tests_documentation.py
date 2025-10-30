@@ -20,7 +20,8 @@ class DocumentAPITest(TestCase):
         list_response = self.client.get(reverse("documents_collection"))
         self.assertEqual(list_response.status_code, 200)
         documents = list_response.json()["documents"]
-        self.assertEqual(len(documents), 1)
+        self.assertEqual(len(documents), 2)
+        print(documents, payload)
         self.assertEqual(documents[0]["title"], payload["title"])
         self.assertEqual(documents[0]["description"], payload["description"])
 

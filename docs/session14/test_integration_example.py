@@ -24,7 +24,7 @@ async def fake_metadata_fetch() -> List[str]:
 class NotifyViewIntegrationTests(TestCase):
     def setUp(self):
         user_model = get_user_model()
-        self.password = "pa55-word"
+        self.password = "password1"
         self.user = user_model.objects.create_user(
             username="lecturer",
             email="lecturer@example.com",

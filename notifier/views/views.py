@@ -11,6 +11,8 @@ from notifier.models import Document
 from notifier.utils.factories import create_user
 from notifier.services.observer import UploadNotifier, alert_admin, log_upload
 from notifier.services.logging import action_logger
+from notifier.services.caching import get_cached_document_payload
+from notifier.services.session_storage import remember_last_document
 from notifier.utils.log_reader import read_logs
 from notifier.utils.metadata import fetch_all_metadata
 
@@ -48,7 +50,6 @@ def notify_view(request):
 
 def serialise_document(document: Document) -> dict:
     return {
-        "id": document.id,
         "title": document.title,
         "description": document.description,
         "uploaded_at": document.uploaded_at.isoformat().replace("+00:00", "Z"),
@@ -58,9 +59,10 @@ def serialise_document(document: Document) -> dict:
 @csrf_exempt
 def documents_collection(request):
     if request.method == "GET":
-        documents = Document.objects.order_by("-uploaded_at")
-        data = [serialise_document(doc) for doc in documents]
-        return JsonResponse({"documents": data})
+        documents = get_cached_document_payload()
+        # documents = Document.objects.order_by("-uploaded_at")
+        # data = [serialise_document(doc) for doc in documents]
+        return JsonResponse({"documents": documents})
 
     if request.method == "POST":
         try:
