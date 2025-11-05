@@ -343,7 +343,7 @@ http://127.0.0.1:8000/admin/
 
 ⸻
 
-### Step 12: Add Static Files Support
+### Step 11: Add Static Files Support
 1.	Create Static Folder:
 
 ```bash
