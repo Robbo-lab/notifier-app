@@ -1,7 +1,7 @@
 {# notifier/templates/notifier/partials/notification_error.html #}
-<div class="notification-error">
-  <h2>Delivery issue</h2>
-  <p>We could not reach {{ recipient_email }} about "{{ subject }}".</p>
-  <p class="details">{{ details }}</p>
-  <p>Please retry later or contact support.</p>
+<div class="notification is-danger is-light">
+  <p class="title is-5 mb-2">Delivery issue</p>
+  <p class="mb-1">We could not reach {{ recipient_email }} about "{{ subject }}".</p>
+  <p class="has-text-weight-semibold">{{ details }}</p>
+  <p class="is-size-7 mt-2">Please retry later or contact support.</p>
 </div>

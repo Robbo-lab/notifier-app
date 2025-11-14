@@ -3,19 +3,34 @@
 {% block title %}Upload Recipients{% endblock %}
 
 {% block content %}
+<div class="columns is-centered">
+  <div class="column is-8">
+    <div class="box">
+      <h2 class="title is-4">Upload Recipients (CSV)</h2>
+      <p class="subtitle is-6">Expected columns: <strong>email</strong>, <strong>first_name</strong>, <strong>last_name</strong></p>
 
-  <h2>Upload Recipients (CSV)</h2>
-  <p>Expected columns: email, first_name, last_name</p> <!-- Explain schema -->
-  {% if messages %}
-    <ul>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Validate File</button>
-  </form>
+      {% if messages %}
+        <div class="mb-4">
+          {% for message in messages %}
+            <div class="notification {% if message.tags %}is-{{ message.tags }}{% else %}is-info{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="content">
+          {{ form.as_p }}
+        </div>
+        <div class="field is-grouped is-grouped-right">
+          <div class="control">
+            <button class="button is-link" type="submit">Validate File</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

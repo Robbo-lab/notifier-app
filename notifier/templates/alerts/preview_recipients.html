@@ -3,9 +3,9 @@
 {% block title %}Recipient Preview{% endblock %}
 
 {% block content %}
-
-  <h2>Preview Recipients</h2>
-  <table>
+<div class="box">
+  <h2 class="title is-4">Preview Recipients</h2>
+  <table class="table is-fullwidth is-striped">
     <thead>
       <tr>
         <th>Email</th>
@@ -22,19 +22,28 @@
         </tr>
       {% empty %}
         <tr>
-          <td colspan="3">No data available.</td>
+          <td colspan="3" class="has-text-centered has-text-grey">No data available.</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
 
-  <nav>
+  <nav class="pagination is-right" role="navigation" aria-label="pagination">
     {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}">Previous</a> <!-- Link to prior page -->
+      <a class="pagination-previous" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% else %}
+      <a class="pagination-previous" disabled>Previous</a>
     {% endif %}
-    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span> <!-- Show position -->
+
     {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">Next</a> <!-- Link to next page -->
+      <a class="pagination-next" href="?page={{ page_obj.next_page_number }}">Next</a>
+    {% else %}
+      <a class="pagination-next" disabled>Next</a>
     {% endif %}
+
+    <ul class="pagination-list">
+      <li><span class="pagination-link is-current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+    </ul>
   </nav>
+</div>
 {% endblock %}
