@@ -1,19 +1,38 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Notifier</title>
-    <link rel="stylesheet" href="{% static 'notifier/styles.css' %}">
-</head>
-<body>
-    <h2>Hello {{ user.name }} ({{ user.role }})</h2>
-    <p>Upload and notification triggered.</p>
+{% extends "base.html" %}
 
-    <h3>Logs:</h3>
-    <ul>
-      {% for log in logs %}
-        <li>{{ log }}</li>
-      {% endfor %}
-    </ul>
-</body>
-</html>
+{% block title %}Upload notifications{% endblock %}
+
+{% block content %}
+<section class="hero is-info is-small mb-5">
+  <div class="hero-body">
+    <p class="title">Hello {{ user.name }}</p>
+    <p class="subtitle">Role: {{ user.role }}</p>
+    <p>Upload and notification successfully triggered.</p>
+  </div>
+</section>
+
+<div class="columns">
+  <div class="column is-5">
+    <div class="box">
+      <h3 class="title is-5">Upload Summary</h3>
+      <p>The latest document upload has been processed and recipients are being notified.</p>
+      <div class="tags mt-3">
+        <span class="tag is-info">Upload complete</span>
+        <span class="tag is-success">Notifications queued</span>
+      </div>
+    </div>
+  </div>
+  <div class="column is-7">
+    <div class="box">
+      <h3 class="title is-5">System Logs</h3>
+      <ul>
+        {% for log in logs %}
+          <li class="mb-2">{{ log }}</li>
+        {% empty %}
+          <li>No logs recorded yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
